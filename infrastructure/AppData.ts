@@ -28,19 +28,22 @@ class AppData implements IAppData {
     constructor() {
         this.getUrlByType=this.getUrlByType.bind(this);
     }
+    
     getUrlByType(pageType: NavPageType) {
-        return this.navPages.find(x=>x.type==pageType)?.url
+        return this.navPages.find(x=>x.type==pageType)?.url || '/';
     }
     get getNavPages(){
         return this.navPages;
     }
-   
+    static instance:AppData;
+    static getInstance():AppData{
+        if(AppData.instance){
+            return AppData.instance;
+        }
+        
+        return AppData.instance=new AppData();
+    }
 }
 
-function getAppData(){
 
-}
-
-
-
-export default AppData || new AppData();
+export default AppData.getInstance();
