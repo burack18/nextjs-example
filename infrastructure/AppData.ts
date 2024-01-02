@@ -38,7 +38,7 @@ class AppData implements IAppData {
 }
 
 function getAppData(){
-    
+
 }
 
 
