@@ -1,13 +1,16 @@
 "use client"
 
-import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage, Form } from '@/components/ui/form'
+import { FormControl, FormDescription, FormField, FormItem, FormLabel, Form } from '@/components/ui/form'
 import Image from 'next/image'
 import Link from 'next/link'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
 import { Input } from '@/components/ui/input'
+import { AuthService } from '@/services/authservice/authservice'
+import { useToast } from "@/components/ui/use-toast"
+import { useRouter } from 'next/navigation'
 
 const formSchema = z.object({
   email: z.string(),
@@ -19,6 +22,9 @@ export default function SignIn() {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const { toast } = useToast();
+  const router=useRouter();
+
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -28,11 +34,25 @@ export default function SignIn() {
     },
   })
 
-  // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values)
+
+  const onSubmit = async ({ email, password }: z.infer<typeof formSchema>) => {
+    const response = await AuthService.singIn({
+      email,
+      password
+    })
+    if (response.isSucceS) {
+
+      toast({
+        title: "Message",
+        description: `Sign in is successfull! Welcome ${response.User?.firstName}`
+      })
+      router.push("/")
+    } else {
+      toast({
+        title: "Message",
+        description: response.message
+      })
+    }
   }
 
   return (

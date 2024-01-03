@@ -8,6 +8,10 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
 import { Input } from '@/components/ui/input'
+import { AuthService } from '@/services/authservice/authservice'
+import { useToast } from "@/components/ui/use-toast"
+import { useRouter } from 'next/navigation'
+
 
 const formSchema = z.object({
     firstName: z.string(),
@@ -22,6 +26,8 @@ export default function SignUp() {
     const [password, setPassword] = useState('');
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
+    const { toast } = useToast();
+    const router=useRouter();
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -33,10 +39,27 @@ export default function SignUp() {
         },
     })
     // 2. Define a submit handler.
-    function onSubmit(values: z.infer<typeof formSchema>) {
-        // Do something with the form values.
-        // ✅ This will be type-safe and validated.
-        console.log(values)
+    const onSubmit = async ({ email, firstName, lastName, password }: z.infer<typeof formSchema>) => {
+        
+        const response = await AuthService.singUp({
+            email,
+            firstName,
+            lastName,
+            password
+        })
+        if (response.isSucceS) {
+            
+            toast({
+                title: "Message",
+                description: `Sign Up is successfull! Welcome ${response.User?.firstName}`
+            })
+            router.push("/sign-in")
+        }else{
+            toast({
+                title: "Message",
+                description: response.message
+            })
+        }
     }
     return (
         <div>
@@ -155,7 +178,7 @@ export default function SignUp() {
                                 Terms of Service
                             </a> and &nbsp;
                             <a className="no-underline border-b border-grey-dark text-grey-dark" href="#">
-                                 Privacy Policy
+                                Privacy Policy
                             </a>
                         </div>
                     </div>
