@@ -10,8 +10,8 @@ import * as z from "zod"
 import { Input } from '@/components/ui/input'
 
 const formSchema = z.object({
-  email:z.string(),
-  password:z.string()
+  email: z.string(),
+  password: z.string()
 })
 
 export default function SignIn() {
@@ -24,7 +24,7 @@ export default function SignIn() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       email: "",
-      password:""
+      password: ""
     },
   })
 
@@ -42,8 +42,8 @@ export default function SignIn() {
           className="g-6 flex h-full flex-wrap items-center justify-center ">
           <div
             className="shrink-1 mb-12 grow-0 basis-auto md:mb-0 md:w-9/12 md:shrink-0 lg:w-6/12 xl:w-6/12">
-            <Image src='/singInImage.jpg' alt="Sample image"   width={750} height={750}      
-             priority={true}  />
+            <Image src='/singInImage.jpg' alt="Sample image" width={750} height={750}
+              priority={true} />
           </div>
           <div className="mb-12 md:mb-0 md:w-5/12 lg:w-3/12 xl:w-3/12">
             <div
@@ -116,8 +116,8 @@ export default function SignIn() {
                             className="peer  block min-h-[auto] w-full rounded outline-none border-0 bg-transparent px-3 py-[0.32rem] leading-[2.15]  transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
                             {...field}
                             value={email}
-                            onChange={(e) => {setEmail(e.target.value); field.value=e.target.value; field.onChange(e)}} 
-                            />
+                            onChange={(e) => { setEmail(e.target.value); field.value = e.target.value; field.onChange(e) }}
+                          />
                         </FormControl>
                         <FormLabel
                           className={`pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] ${email.length > 0 && '-translate-y-[1.15rem] scale-[0.8]'}  text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[1.15rem] peer-focus:scale-[0.8] peer-focus:text-primary  motion-reduce:transition-none ${email?.length > 0 && 'opacity:0'} dark:peer-focus:text-primary`}
@@ -141,8 +141,8 @@ export default function SignIn() {
                             {...field}
                             type='password'
                             value={password}
-                            onChange={(e) => {setPassword(e.target.value); field.value=e.target.value; field.onChange(e)}} 
-                            />
+                            onChange={(e) => { setPassword(e.target.value); field.value = e.target.value; field.onChange(e) }}
+                          />
                         </FormControl>
                         <FormLabel
                           className={`pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[2.15] ${password.length > 0 && '-translate-y-[1.15rem] scale-[0.8]'}  text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[1.15rem] peer-focus:scale-[0.8] peer-focus:text-primary  motion-reduce:transition-none ${password?.length > 0 && 'opacity:0'} dark:peer-focus:text-primary`}
@@ -152,7 +152,7 @@ export default function SignIn() {
                     )}
                   />
                 </div>
-            
+
 
                 <div className="mb-6 flex items-center justify-between">
                   <div className="mb-[0.125rem] block min-h-[1.5rem] pl-[1.5rem]">
@@ -187,3 +187,4 @@ export default function SignIn() {
     </section>
   )
 }
+
