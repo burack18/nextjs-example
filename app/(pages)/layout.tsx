@@ -21,7 +21,7 @@ export default function Layout({
     return (
         <section>
             <Navbar />
-            <div className='max-w-screen-lg	pt-5 m-auto'>
+            <div className='max-w-screen-xl	pt-5 m-auto'>
                 {children}
             </div>
         </section>
