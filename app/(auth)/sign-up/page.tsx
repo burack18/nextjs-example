@@ -184,7 +184,7 @@ export default function SignUp() {
                     </div>
 
                     <div className="text-grey-dark mt-6">
-                        Already have an account?
+                        Already have an account? &nbsp;
                         <Link className="no-underline border-b border-blue text-blue" href="/sign-in/">
                             Log in
                         </Link>.

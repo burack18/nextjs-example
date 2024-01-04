@@ -13,6 +13,7 @@ import {
 import { Button } from './button'
 import { Calendar, Command, MoreHorizontal, Tags, Trash, User } from 'lucide-react'
 import { DropdownMenuShortcut } from './dropdown-menu'
+import router from 'next/navigation';
 
 export default function Navbar() {
 
@@ -24,16 +25,20 @@ export default function Navbar() {
     const [openSettings, setOpenSettings] = useState(false);
 
     useLayoutEffect(() => {
-        if (path != '/') {
+        navigate(path)
+    }, [])
+    const navigate = (url: string) => {
+        if (url != '/') {
             const p = pages.map(x => {
                 return { ...x, active: false }
             });
-            const activePage = p.find(x => x.url === path);
+            const activePage = p.find(x => x.url === url);
             activePage!.active = true;
+            console.log(activePage)
             setPages([...p])
+            router.push(url)
         }
-    }, [])
-
+    }
     const logoClick = () => {
         const p = pages.map(x => {
             return { ...x, active: false }
@@ -85,11 +90,10 @@ export default function Navbar() {
                     >
                         {pages.map(x => (
                             <li key={x.url} className="mb-4 lg:mb-0 lg:pr-2" >
-                                <Link
-                                    className={`${x.active && 'underline underline-offset-1'} text-neutral-500 transition duration-200 hover:text-neutral-700 hover:ease-in-out focus:text-neutral-700 disabled:text-black/30 motion-reduce:transition-none dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-zinc-400`}
-                                    href={x.url}
+                                <div onClick={() => navigate(x.url)}
+                                    className={`${x.active && 'underline underline-offset-1'} hover:cursor-pointer text-neutral-500 transition duration-200 hover:text-neutral-700 hover:ease-in-out focus:text-neutral-700 disabled:text-black/30 motion-reduce:transition-none dark:text-neutral-200 dark:hover:text-neutral-300 dark:focus:text-neutral-300 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-zinc-400`}
                                 >{x.name}
-                                </Link>
+                                </div>
                             </li>
                         ))}
 
@@ -144,7 +148,7 @@ export default function Navbar() {
                         </div>
                         <div className='relative mr-3'>
                             <Avatar>
-                                <AvatarImage onClick={()=>setOpenSettings(!openSettings)} src="https://github.com/shadcn.png" alt="@shadcn" />
+                                <AvatarImage onClick={() => setOpenSettings(!openSettings)} src="https://github.com/shadcn.png" alt="@shadcn" />
                             </Avatar>
                             <div id="dropdown-states2" className={`z-10 ${openSettings && 'hidden'} bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 absolute top-15 right-1`}>
                                 <ul className="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="states-button">
